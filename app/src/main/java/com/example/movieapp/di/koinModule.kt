@@ -1,10 +1,12 @@
-package com.example.movieapp
+package com.example.movieapp.di
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.movieapp.model.PageData
+import com.example.movieapp.R
 import org.koin.dsl.module
 
 val koinModule = module {

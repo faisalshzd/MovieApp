@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.movieapp.di.koinModule
 import com.example.movieapp.ui.theme.MovieAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.android.ext.koin.androidContext

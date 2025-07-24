@@ -1,4 +1,4 @@
-package com.example.movieapp
+package com.example.movieapp.model
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
