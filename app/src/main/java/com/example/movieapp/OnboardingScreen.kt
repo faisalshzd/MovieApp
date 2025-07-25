@@ -1,7 +1,5 @@
 package com.example.movieapp
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -20,11 +18,8 @@ import org.koin.compose.koinInject
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.KeyboardArrowRight
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.RoundRect
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.StrokeCap
@@ -34,7 +29,6 @@ import com.example.movieapp.ui.onboarding.PageOneLayout
 import com.example.movieapp.ui.onboarding.PageThreeLayout
 import com.example.movieapp.ui.onboarding.PageTwoLayout
 import kotlinx.coroutines.delay
-import kotlin.io.path.Path
 
 
 @Composable
@@ -140,8 +134,8 @@ fun OnboardingScreen(navController: NavController) {
                     .padding(end = 24.dp, bottom = 80.dp)
             ) {
                 // Animate border progress based on page
-                Canvas(modifier = Modifier.size(70.dp)) {
-                    val strokeWidth = 6f
+                Canvas(modifier = Modifier.size(78.dp)) {
+                    val strokeWidth = 8f
                     val cornerRadius = 40f
                     val gapRatio = 0.05f // 5% of each segment reserved as gap
 
