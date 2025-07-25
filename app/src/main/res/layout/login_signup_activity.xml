@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F1D">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- CN Icon -->
+        <ImageView
+            android:id="@+id/logoIcon"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/cn_tv"
+            android:contentDescription="CN Icon" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CINEMAX"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textSize="28sp"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="24dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your registered\nPhone Number to Sign Up"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textColor="#92929D"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
+
+        <!-- Sign Up Button -->
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="327dp"
+            android:layout_height="56dp"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="64dp"
+            android:backgroundTint="#12CDD9"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:background="@drawable/rounded_button" />
+
+        <!-- Already have account -->
+        <TextView
+            android:id="@+id/loginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I already have an account? Login"
+            android:textColor="#92929D"
+            android:textSize="16sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:layout_marginTop="34dp"
+            android:textColorLink="#12CDD9"
+            android:linksClickable="true"
+            android:autoLink="none" />
+
+        <!-- Divider -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="41dp"
+            android:layout_marginBottom="48dp"
+            android:paddingHorizontal="61dp">
+
+            <View
+                android:layout_width="62dp"
+                android:layout_height="1dp"
+                android:background="#252836" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  Or Sign up with  "
+                android:fontFamily="@font/montserrat_medium"
+                android:textColor="#9A9A9A"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="62dp"
+                android:layout_height="1dp"
+                android:background="#252836" />
+        </LinearLayout>
+
+        <!-- Social icons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="50dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/google_icon"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/google_cricle_bg"
+                android:padding="14dp" />
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:src="@drawable/apple_icon"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/apple_circle_bg"
+                android:padding="16dp" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/facebook_icon"
+                android:background="@drawable/facebook_circle_bg"
+                android:padding="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
