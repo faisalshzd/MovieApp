@@ -40,25 +40,25 @@ fun OnboardingScreen(navController: NavController) {
     )
     val scope = rememberCoroutineScope()
 
-//    LaunchedEffect(Unit) {
-//        while (true) {
-//            delay(2000)
-//            val nextPage = if (pagerState.currentPage < pages.lastIndex) {
-//                pagerState.currentPage + 1
-//            } else {
-//                null
-//            }
-//
-//            if (nextPage != null) {
-//                pagerState.animateScrollToPage(nextPage)
-//            } else {
-//                navController.navigate("main") {
-//                    popUpTo("onboarding") { inclusive = true }
-//                }
-//                break
-//            }
-//        }
-//    }
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(2000)
+            val nextPage = if (pagerState.currentPage < pages.lastIndex) {
+                pagerState.currentPage + 1
+            } else {
+                null
+            }
+
+            if (nextPage != null) {
+                pagerState.animateScrollToPage(nextPage)
+            } else {
+                navController.navigate("splash") {
+                    popUpTo("onboarding") { inclusive = true }
+                }
+                break
+            }
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()

@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.movieapp.Login_Signup_Screeens.Login.Login_or_Sign
 import com.example.movieapp.di.koinModule
 import com.example.movieapp.ui.theme.MovieAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -63,27 +64,16 @@ class MainActivity : ComponentActivity() {
                         composable("onboarding") {
                             OnboardingScreen(navController)
                         }
-                        composable("main") {
-                            MainScreen()
+                        composable("splash") {
+                            SplashScreen(navController)
+                        }
+                        composable("login_or_signup") {
+                            Login_or_Sign()
                         }
                     }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun MainScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "🎬 Welcome to Cinemax!",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.White
-        )
     }
 }
 
