@@ -27,7 +27,7 @@ fun SplashScreen(navController: NavController) {
     //Coroutine-based navigation after delay
     LaunchedEffect(Unit) {
         delay(1500)
-        navController.navigate("login_or_signup") {
+        navController.navigate("onboarding") {
             popUpTo("splash") { inclusive = true }
         }
     }

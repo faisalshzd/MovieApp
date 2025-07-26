@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F0F1D">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#171725">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,32 +44,35 @@
             android:layout_marginTop="8dp" />
 
         <!-- Sign Up Button -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/signupButton"
             android:layout_width="327dp"
             android:layout_height="56dp"
             android:text="Sign Up"
+            android:textSize="16dp"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:layout_marginTop="64dp"
-            android:backgroundTint="#12CDD9"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/montserrat_medium"
             android:background="@drawable/rounded_button" />
+
 
         <!-- Already have account -->
         <TextView
             android:id="@+id/loginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I already have an account? Login"
-            android:textColor="#92929D"
             android:textSize="16sp"
-            android:fontFamily="@font/montserrat_medium"
             android:layout_marginTop="34dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:textColor="#92929D"
             android:textColorLink="#12CDD9"
+            android:autoLink="none"
             android:linksClickable="true"
-            android:autoLink="none" />
+            android:text="I already have an account? Login"
+            tools:ignore="UnknownId" />
+
 
         <!-- Divider -->
         <LinearLayout

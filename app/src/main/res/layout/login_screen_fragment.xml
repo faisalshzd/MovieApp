@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#171725"
+    android:fitsSystemWindows="true">
+
+
+    <!-- Back Button -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/back_button_bg"
+        android:src="@drawable/back_arrow"
+        android:padding="4dp"
+        android:contentDescription="Back"
+        android:scaleType="center"
+        app:tint="#FFFFFF" />
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/loginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="46dp"/>
+
+    <!-- "Hi, Tiffany" -->
+    <TextView
+        android:id="@+id/welcomeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi, Tiffany"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:fontFamily="@font/montserrat_semibold"
+        android:layout_below="@id/loginTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+    <!-- Welcome Message -->
+    <TextView
+        android:id="@+id/welcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome back! Please enter\nyour details."
+        android:textColor="#EBEBEF"
+        android:textSize="12sp"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center"
+        android:layout_below="@id/welcomeTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp" />
+
+<!--    &lt;!&ndash; Email Field &ndash;&gt;-->
+<!--    <EditText-->
+<!--        android:id="@+id/emailEditText"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:hint="Email Address"-->
+<!--        android:inputType="textEmailAddress"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:textColorHint="#92929D"-->
+<!--        android:background="@drawable/rounded_edittext_bg"-->
+<!--        android:paddingStart="16dp"-->
+<!--        android:paddingEnd="16dp"-->
+<!--        android:layout_below="@id/welcomeMessage"/>-->
+
+<!--    &lt;!&ndash; Password Field with Eye Icon &ndash;&gt;-->
+<!--    <EditText-->
+<!--        android:id="@+id/passwordEditText"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:layout_below="@id/emailEditText"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:hint="Password"-->
+<!--        android:inputType="textPassword"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:textColorHint="#92929D"-->
+<!--        android:background="@drawable/rounded_edittext_bg"-->
+<!--        android:paddingStart="16dp"-->
+<!--        android:paddingEnd="48dp"-->
+<!--    android:drawableEnd="@drawable/password_eye_off"-->
+<!--    android:drawableRight="@drawable/password_eye_off"-->
+<!--        />-->
+
+    <!-- Email Label -->
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email Address"
+        android:fontFamily="@font/montserrat_medium"
+        android:textColor="#EBEBEF"
+        android:textSize="12sp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="64dp"
+        android:layout_below="@id/welcomeMessage"/>
+
+    <!-- Email Field -->
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/emailLabel"
+        android:background="@drawable/rounded_edittext_bg"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#92929D"
+        android:textColorHint="#92929D"
+        android:hint="you@example.com"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="14dp"
+        android:inputType="textEmailAddress"
+        />
+
+    <!-- Password Label -->
+    <TextView
+        android:id="@+id/passwordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:fontFamily="@font/montserrat_medium"
+        android:textColor="#EBEBEF"
+        android:textSize="12sp"
+        android:layout_below="@id/emailEditText"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp" />
+
+    <!-- Password Field -->
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_below="@id/passwordLabel"
+        android:background="@drawable/rounded_edittext_bg"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="48dp"
+        android:textColor="#92929D"
+        android:textColorHint="#92929D"
+        android:hint="Enter your password"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="14dp"
+        android:inputType="textPassword" />
+
+    <!-- Password toggle eye icon -->
+    <ImageView
+        android:id="@+id/passwordToggle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@id/passwordEditText"
+        android:layout_alignEnd="@id/passwordEditText"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="14dp"
+        android:src="@drawable/password_eye_off"
+        android:contentDescription="Toggle Password"
+        app:tint="#92929D" />
+
+    <!-- Forgot Password -->
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textColor="#00E0FF"
+        android:textSize="12dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:layout_below="@id/passwordEditText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="25dp"/>
+
+
+    <!-- Login Button -->
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="327dp"
+        android:layout_height="56dp"
+        android:text="Login"
+        android:textSize="16dp"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        android:fontFamily="@font/montserrat_medium"
+        android:background="@drawable/rounded_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_below="@id/forgotPassword"
+        android:clickable="true"
+        android:focusable="true"/>
+</RelativeLayout>

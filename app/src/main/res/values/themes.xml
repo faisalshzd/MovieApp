@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MovieApp" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="Base.Theme.AndroidPlayground" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <!-- Base Theme using Material 3 -->
+    <style name="Theme.AndroidPlayground" parent="Base.Theme.AndroidPlayground">
+
+        <item name="colorPrimary">@color/button_color</item>
+        <item name="colorSecondary">@color/teal_700</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- This prevents Material buttons from overriding your drawable -->
+        <item name="materialButtonStyle">@style/CustomMaterialButton</item>
+    </style>
+
+    <!-- Optional: Custom MaterialButton style -->
+    <style name="CustomMaterialButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

@@ -54,16 +54,16 @@ class MainActivity : AppCompatActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "onboarding"
+                        startDestination = "splash"
                     ) {
-                        composable("onboarding") {
-                            OnboardingScreen(navController)
-                        }
                         composable("splash") {
                             SplashScreen(navController)
                         }
+                        composable("onboarding") {
+                            OnboardingScreen(navController)
+                        }
                         composable("login_or_signup") {
-                            Login_or_Sign()
+                            Login_or_Sign(navController)
                         }
                     }
                 }
@@ -71,4 +71,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
 

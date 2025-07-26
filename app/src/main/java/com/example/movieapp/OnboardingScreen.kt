@@ -52,7 +52,7 @@ fun OnboardingScreen(navController: NavController) {
             if (nextPage != null) {
                 pagerState.animateScrollToPage(nextPage)
             } else {
-                navController.navigate("splash") {
+                navController.navigate("login_or_signup") {
                     popUpTo("onboarding") { inclusive = true }
                 }
                 break
