@@ -8,13 +8,25 @@
         android:id="@+id/loginOrSignupFragment"
         android:name="com.example.movieapp.Login_Signup_Screeens.Login.LoginOrSignupFragment"
         android:label="Login or Signup">
+
+        <!-- Action to Login -->
         <action
             android:id="@+id/action_loginOrSignupFragment_to_loginScreenFragment"
             app:destination="@id/loginScreenFragment" />
+
+        <!-- Action to Signup -->
+        <action
+            android:id="@+id/action_loginOrSignupFragment_to_signupScreenFragment"
+            app:destination="@id/signupScreenFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/loginScreenFragment"
         android:name="com.example.movieapp.Login_Signup_Screeens.Login.LoginScreenFragment"
         android:label="Login" />
+
+    <fragment
+        android:id="@+id/signupScreenFragment"
+        android:name="com.example.movieapp.Login_Signup_Screeens.Login.SignupScreenFragment"
+        android:label="Signup" />
 </navigation>

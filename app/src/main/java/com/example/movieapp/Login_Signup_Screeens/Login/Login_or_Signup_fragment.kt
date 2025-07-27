@@ -37,6 +37,7 @@ class LoginOrSignupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val loginText = view.findViewById<TextView>(R.id.loginText)
+        val signupButton = view.findViewById<View>(R.id.signupButton)
         val fullText = "I already have an account? Login"
         val loginWord = "Login"
         val spannable = SpannableString(fullText)
@@ -48,7 +49,7 @@ class LoginOrSignupFragment : Fragment() {
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.color = android.graphics.Color.parseColor("#12CDD9") // same tone as signup button
+                ds.color = android.graphics.Color.parseColor("#12CDD9")
                 ds.isUnderlineText = false
             }
         }
@@ -61,6 +62,12 @@ class LoginOrSignupFragment : Fragment() {
         loginText.text = spannable
         loginText.movementMethod = LinkMovementMethod.getInstance()
         loginText.highlightColor = ContextCompat.getColor(requireContext(), android.R.color.transparent)
+
+        // Navigate to SignUp screen
+        signupButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_loginOrSignupFragment_to_signupScreenFragment)
+        }
+
     }
 }
 
