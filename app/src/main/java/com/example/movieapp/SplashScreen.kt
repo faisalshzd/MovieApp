@@ -1,5 +1,6 @@
 package com.example.movieapp
 
+import android.os.Bundle
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,19 +19,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController,
+                 firebaseAnalytics: FirebaseAnalytics
+) {
     val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))
 
     //Coroutine-based navigation after delay
     LaunchedEffect(Unit) {
         delay(1500)
+
+//        val bundle = Bundle().apply {
+//            putString("screen_name", "SplashScreen")
+//        }
+//        firebaseAnalytics.logEvent("splash_screen_opened", bundle)
+
+        Firebase_Navigation_Helper(firebaseAnalytics, "SplashScreen")
+
         navController.navigate("onboarding") {
             popUpTo("splash") { inclusive = true }
         }
     }
+
 
     Box(
         modifier = Modifier.fillMaxSize(),

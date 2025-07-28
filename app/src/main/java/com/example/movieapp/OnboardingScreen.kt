@@ -42,6 +42,7 @@ fun OnboardingScreen(navController: NavController) {
 
     LaunchedEffect(Unit) {
         while (true) {
+
             delay(2000)
             val nextPage = if (pagerState.currentPage < pages.lastIndex) {
                 pagerState.currentPage + 1

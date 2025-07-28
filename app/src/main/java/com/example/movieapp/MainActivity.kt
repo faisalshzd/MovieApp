@@ -20,6 +20,9 @@ import com.example.movieapp.Reset_Password.VerificationScreen
 import com.example.movieapp.di.koinModule
 import com.example.movieapp.ui.theme.MovieAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.analytics
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -34,8 +37,10 @@ class MovieApp : Application() {
 }
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = Firebase.analytics
         enableEdgeToEdge()
         setContent {
             MovieAppTheme {
@@ -69,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                         startDestination = "splash"
                     ) {
                         composable("splash") {
-                            SplashScreen(navController)
+                            SplashScreen(navController, firebaseAnalytics)
                         }
                         composable("onboarding") {
                             OnboardingScreen(navController)
