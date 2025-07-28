@@ -1,5 +1,6 @@
 package com.example.movieapp.Login_Signup_Screeens.Login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
 import android.graphics.Color
+import android.widget.TextView
+import com.example.movieapp.Reset_Password.ResetPasswordActivity
 
 class LoginScreenFragment : Fragment() {
 
@@ -56,5 +59,12 @@ class LoginScreenFragment : Fragment() {
 
             passwordEditText.setSelection(passwordEditText.text?.length ?: 0)
         }
+        val forgotPasswordTextView = view.findViewById<TextView>(R.id.forgotPassword)
+        forgotPasswordTextView.setOnClickListener {
+            val intent = Intent(requireContext(), ResetPasswordActivity::class.java)
+            startActivity(intent)
+            requireActivity().overridePendingTransition(0, 0)
+        }
+
     }
 }

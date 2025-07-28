@@ -14,6 +14,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.movieapp.Login_Signup_Screeens.Login.Login_or_Sign
+import com.example.movieapp.Reset_Password.CreateNewPasswordScreen
+import com.example.movieapp.Reset_Password.ResetPasswordScreen
+import com.example.movieapp.Reset_Password.VerificationScreen
 import com.example.movieapp.di.koinModule
 import com.example.movieapp.ui.theme.MovieAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -65,6 +68,24 @@ class MainActivity : AppCompatActivity() {
                         composable("login_or_signup") {
                             Login_or_Sign(navController)
                         }
+                        composable("reset_password") {
+                            ResetPasswordScreen(onBackClick = { navController.popBackStack() })
+                        }
+                        composable("verification_screen/{email}") { backStackEntry ->
+                            val email = backStackEntry.arguments?.getString("email") ?: "example@gmail.com"
+                            VerificationScreen(
+                                email = email,
+                                onBackClick = { navController.popBackStack() },
+                                onResendClick = { /* TODO: Handle resend logic */ },
+                                onContinue={         navController.navigate("create_new_password_screen")}
+                            )
+                        }
+                        composable("create_new_password_screen") {
+                            CreateNewPasswordScreen(
+                                onBackClick = { navController.popBackStack() }
+                            )
+                        }
+
                     }
                 }
             }
