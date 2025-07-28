@@ -73,15 +73,16 @@ class VerificationScreenActivity : ComponentActivity() {
                     VerificationScreen(
                         email = emailFromIntent,
                         onBackClick = {
-                            val intent = Intent(this, ResetPasswordActivity::class.java)
-                            startActivity(intent)
                             finish()
+                            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+
                         },
                         onResendClick = { /* TODO: Implement resend logic */ },
                         onContinue = {
                             val intent = Intent(this, CreateNewPasswordActivity::class.java)
                             startActivity(intent)
                             finish()
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         }
 
                     )

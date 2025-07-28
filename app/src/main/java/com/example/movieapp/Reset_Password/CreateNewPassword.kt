@@ -52,6 +52,7 @@ class CreateNewPasswordActivity : ComponentActivity() {
                             val intent = Intent(this, ResetPasswordActivity::class.java)
                             startActivity(intent)
                             finish()
+                            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
                         },
                     )
                 }
@@ -71,7 +72,6 @@ fun CreateNewPasswordScreen(
     var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
-    // Use Scaffold for the top app bar and content
     Scaffold(
         topBar = {
             TopAppBar(
@@ -169,6 +169,7 @@ fun CreateNewPasswordScreen(
             Button(
                 onClick = {
                     // TODO: Implement password update logic
+                    // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

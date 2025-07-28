@@ -55,6 +55,15 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     val navController = rememberNavController()
 
+                    val shouldShowLoginFragment = intent.getBooleanExtra("navigate_to_login_fragment", false)
+                    if (shouldShowLoginFragment) {
+                        // Delay until after composition
+                        androidx.compose.runtime.LaunchedEffect(Unit) {
+                            navController.navigate("login_or_signup")
+                        }
+                    }
+
+
                     NavHost(
                         navController = navController,
                         startDestination = "splash"

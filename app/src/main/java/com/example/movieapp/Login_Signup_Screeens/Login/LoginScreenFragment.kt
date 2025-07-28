@@ -63,7 +63,7 @@ class LoginScreenFragment : Fragment() {
         forgotPasswordTextView.setOnClickListener {
             val intent = Intent(requireContext(), ResetPasswordActivity::class.java)
             startActivity(intent)
-            requireActivity().overridePendingTransition(0, 0)
+            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }

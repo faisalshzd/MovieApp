@@ -25,6 +25,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.movieapp.Login_Signup_Screeens.Login.LoginScreenFragment
+import com.example.movieapp.MainActivity
 import com.example.movieapp.R
 import com.example.movieapp.ui.theme.MovieAppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -54,15 +56,16 @@ class ResetPasswordActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = backgroundColor
                 ) {
-                    ResetPasswordScreen(onBackClick = { finish() })
+                    ResetPasswordScreen(onBackClick = {
+                        val intent = Intent(this@ResetPasswordActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        startActivity(intent)
+                        finish()
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+                    })
                 }
             }
         }
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(0, 0)
     }
 }
 
@@ -198,7 +201,7 @@ fun ResetPasswordScreen(onBackClick: () -> Unit) {
                             val intent = Intent(context, VerificationScreenActivity::class.java)
                             intent.putExtra("email", email)
                             context.startActivity(intent)
-                            (context as? Activity)?.finish()
+                            (context as? Activity)?.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         }
                     }
                 },
