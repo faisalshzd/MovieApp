@@ -10,8 +10,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -96,13 +94,13 @@ fun CreateNewPasswordScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF171725))
             )
         },
-        containerColor = Color(0xFF171725) // Set the background color for the entire screen
+        containerColor = Color(0xFF171725)
     ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 24.dp)
-                .padding(top = paddingValues.calculateTopPadding()), // Apply padding from Scaffold
+                .padding(top = paddingValues.calculateTopPadding()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(24.dp))
@@ -224,22 +222,22 @@ fun PasswordInputField(
         },
         textStyle = LocalTextStyle.current.copy(
             color = Color.White,
-            fontSize = 14.sp, // Adjusted font size for consistency
+            fontSize = 14.sp,
             fontFamily = fontFamily
         ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent, // No cyan focus indicator
-            unfocusedIndicatorColor = Color.Transparent, // No default indicator
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Color.White,
             focusedTextColor = Color.White,
-            unfocusedTextColor = Color(0xFF92929D) // Unfocused text color
+            unfocusedTextColor = Color(0xFF92929D)
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(53.dp) // Height from ResetPasswordScreen's TextField
+            .height(53.dp)
             .border(1.dp, Color(0xFF252836), RoundedCornerShape(24.dp)), // Border and rounded corners
         singleLine = true // Ensures single line
     )
