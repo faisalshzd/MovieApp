@@ -15,7 +15,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
 import android.graphics.Color
 import android.widget.TextView
+import android.widget.Toast
 import com.example.movieapp.Reset_Password.ResetPasswordActivity
+import com.example.movieapp.trackFirebaseEvent
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class LoginScreenFragment : Fragment() {
 
@@ -64,6 +67,36 @@ class LoginScreenFragment : Fragment() {
             val intent = Intent(requireContext(), ResetPasswordActivity::class.java)
             startActivity(intent)
             requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
+        // Firebase Analytics: Track login button click
+        val firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+        val loginButton = view.findViewById<View>(R.id.loginButton)
+        val emailEditText = view.findViewById<EditText>(R.id.emailEditText)
+
+        loginButton.setOnClickListener {
+            val enteredEmail = emailEditText.text.toString().trim()
+
+            // Basic email validation
+            if (enteredEmail.isEmpty()) {
+                Toast.makeText(requireContext(), "Kindly enter your email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\$")
+            if (!emailRegex.matches(enteredEmail)) {
+                Toast.makeText(requireContext(), "Please enter a valid email (e.g. abc@gmail.com)", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Valid email — send Firebase event
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.METHOD, "email_password")
+                putString("user_email", enteredEmail)
+            }
+
+            trackFirebaseEvent(firebaseAnalytics, "LoginButtonClicked", bundle)
+
+            //  login logic
         }
 
     }
