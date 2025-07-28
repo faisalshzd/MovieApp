@@ -32,12 +32,12 @@ fun SplashScreen(navController: NavController,
     LaunchedEffect(Unit) {
         delay(1500)
 
-//        val bundle = Bundle().apply {
-//            putString("screen_name", "SplashScreen")
-//        }
-//        firebaseAnalytics.logEvent("splash_screen_opened", bundle)
+        val bundle = Bundle().apply {
+            putString("screen_name", "SplashScreen")
+            putString(FirebaseAnalytics.Param.SCREEN_CLASS, "Composable")
+        }
 
-        Firebase_Navigation_Helper(firebaseAnalytics, "SplashScreen")
+        trackFirebaseEvent(firebaseAnalytics, "SplashScreen",bundle)
 
         navController.navigate("onboarding") {
             popUpTo("splash") { inclusive = true }
