@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.movieapp.analytics.AnalyticsTracker
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.delay
 
@@ -37,7 +38,7 @@ fun SplashScreen(navController: NavController,
             putString(FirebaseAnalytics.Param.SCREEN_CLASS, "Composable")
         }
 
-        trackFirebaseEvent(firebaseAnalytics, "SplashScreen",bundle)
+        AnalyticsTracker.trackEvent(firebaseAnalytics, "SplashScreen", bundle)
 
         navController.navigate("onboarding") {
             popUpTo("splash") { inclusive = true }

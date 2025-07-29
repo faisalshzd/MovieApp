@@ -17,7 +17,7 @@ import android.graphics.Color
 import android.widget.TextView
 import android.widget.Toast
 import com.example.movieapp.Reset_Password.ResetPasswordActivity
-import com.example.movieapp.trackFirebaseEvent
+import com.example.movieapp.analytics.AnalyticsTracker
 import com.google.firebase.analytics.FirebaseAnalytics
 
 class LoginScreenFragment : Fragment() {
@@ -94,7 +94,7 @@ class LoginScreenFragment : Fragment() {
                 putString("user_email", enteredEmail)
             }
 
-            trackFirebaseEvent(firebaseAnalytics, "LoginButtonClicked", bundle)
+            AnalyticsTracker.trackEvent(firebaseAnalytics, "LoginButtonClicked", bundle)
 
             //  login logic
         }
