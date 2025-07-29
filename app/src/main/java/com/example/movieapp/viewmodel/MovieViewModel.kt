@@ -1,33 +1,34 @@
 package com.example.movieapp.viewmodel
 
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.data.model.Movie
-import com.example.movieapp.data.repository.MovieRepository
+import com.example.movieapp.data.model.UiMovie
+import com.example.movieapp.usecase.GetGenresUseCase
+import com.example.movieapp.usecase.GetPopularMoviesUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.*
 
-class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
+class MovieViewModel(
+    private val getGenresUseCase: GetGenresUseCase,
+    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
+) : ViewModel() {
 
-    // Movie list exposed to UI
-    var popularMovies by mutableStateOf<List<Movie>>(emptyList())
+    var popularUiMovies by mutableStateOf<List<UiMovie>>(emptyList())
         private set
 
-    // Genre map: genreId -> genreName
     private val _genreMap = MutableStateFlow<Map<Int, String>>(emptyMap())
     val genreMap: StateFlow<Map<Int, String>> = _genreMap
 
     fun fetchMoviesAndGenres(apiKey: String = "13fe289de01d157201e39ab655a5ed97") {
         viewModelScope.launch {
             try {
-                // Fetch and store genres
-                val genres = repository.getGenres(apiKey)
+                val genres = getGenresUseCase.execute(apiKey)
                 _genreMap.value = genres
 
-                // Fetch and store movies
-                popularMovies = repository.getPopularMovies()
+
+                popularUiMovies = getPopularMoviesUseCase.execute(genres)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

@@ -25,7 +25,7 @@ val koinModule = module {
     single<Retrofit> {
         Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
-            .client(get()) // Now this works
+            .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -34,10 +34,17 @@ val koinModule = module {
         get<Retrofit>().create(MovieApiService::class.java)
     }
 
-    single { MovieRepository(get()) }
+    // Binds interface to implementation
+    single<MovieRepository> { com.example.movieapp.data.repository.MovieRepositoryImpl(get()) }
 
-    viewModel { MovieViewModel(get()) }
+    // UseCases
+    single { com.example.movieapp.usecase.GetGenresUseCase(get()) }
+    single { com.example.movieapp.usecase.GetPopularMoviesUseCase(get()) }
 
+    // ViewModel
+    viewModel { com.example.movieapp.viewmodel.MovieViewModel(get(), get()) }
+
+    // Fonts and PageData list
     val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))
     val montserratMedium = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium))
 
@@ -81,7 +88,7 @@ val koinModule = module {
                 descFontWeight = FontWeight(500),
                 descFontFamily = montserratMedium,
                 descColor = Color(0xFF92929D)
-            ),
+            )
         )
     }
 }

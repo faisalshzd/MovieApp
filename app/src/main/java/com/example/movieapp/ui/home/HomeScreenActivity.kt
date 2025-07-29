@@ -10,15 +10,18 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import coil.compose.AsyncImage
 import com.example.movieapp.R
-import com.example.movieapp.data.model.Movie
+import com.example.movieapp.data.model.UiMovie
 import com.example.movieapp.viewmodel.MovieViewModel
 import com.google.accompanist.pager.*
 
@@ -27,10 +30,11 @@ import com.google.accompanist.pager.*
 fun HomeScreenActivity(viewModel: MovieViewModel) {
     val genreMap by viewModel.genreMap.collectAsState()
     val pagerState = rememberPagerState()
-    val coroutineScope = rememberCoroutineScope()
     val categories = listOf("All", "Comedy", "Animation", "Dokumenter")
     var selectedCategory by remember { mutableStateOf("All") }
     var searchQuery by remember { mutableStateOf("") }
+    val montserratMedium = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium))
+    val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))
 
     LaunchedEffect(Unit) {
         viewModel.fetchMoviesAndGenres()
@@ -38,7 +42,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
 
     Scaffold(
         bottomBar = { BottomNavBar() },
-        containerColor = Color(0xFF121212)
+        containerColor = Color(0xFF171725)
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -60,13 +64,14 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                         painter = painterResource(id = R.drawable.ic_profile),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(48.dp)
+                            .size(40.dp)
                             .clip(CircleShape)
+                            .background(Color.White)
                             .border(2.dp, Color.White, CircleShape)
                     )
-                    Spacer(Modifier.width(8.dp))
+                    Spacer(Modifier.width(16.dp))
                     Column {
-                        Text("Hello, Smith", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text("Hello, Smith", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                         Text("Let’s stream your favorite movie", color = Color.Gray, fontSize = 12.sp)
                     }
                 }
@@ -110,14 +115,18 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     .fillMaxWidth()
                     .height(180.dp)
             ) { page ->
+                val movie = viewModel.popularUiMovies.getOrNull(page)
+                val imageUrl = movie?.posterUrl ?: "https://via.placeholder.com/500x750.png?text=No+Image"
+
                 AsyncImage(
-                    model = "https://image.tmdb.org/t/p/w500${viewModel.popularMovies.getOrNull(page)?.poster_path}",
+                    model = imageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(MaterialTheme.shapes.medium)
                 )
             }
+
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -172,8 +181,8 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
 
             // Movie Cards
             LazyRow {
-                items(viewModel.popularMovies) { movie ->
-                    MovieCard(movie = movie, genreMap = genreMap)
+                items(viewModel.popularUiMovies) { movie ->
+                    MovieCard(movie = movie)
                 }
             }
         }
@@ -181,16 +190,14 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
 }
 
 @Composable
-fun MovieCard(movie: Movie, genreMap: Map<Int, String>) {
-    val genres = movie.genre_ids.joinToString(", ") { id -> genreMap[id] ?: "Unknown" }
-
+fun MovieCard(movie: UiMovie) {
     Column(
         modifier = Modifier
             .width(140.dp)
             .padding(end = 16.dp)
     ) {
         AsyncImage(
-            model = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
+            model = movie.posterUrl,
             contentDescription = null,
             modifier = Modifier
                 .height(200.dp)
@@ -207,32 +214,64 @@ fun MovieCard(movie: Movie, genreMap: Map<Int, String>) {
         )
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Default.Star, contentDescription = null, tint = Color.Yellow, modifier = Modifier.size(16.dp))
-            Text(text = "${movie.vote_average}", color = Color.White, fontSize = 12.sp)
+            Text(text = "${movie.rating}", color = Color.White, fontSize = 12.sp)
         }
-        Text(text = genres, color = Color.LightGray, fontSize = 10.sp, maxLines = 2, overflow = TextOverflow.Ellipsis)
+        Text(text = movie.genres, color = Color.LightGray, fontSize = 10.sp, maxLines = 2, overflow = TextOverflow.Ellipsis)
     }
 }
 
+
 @Composable
 fun BottomNavBar() {
+    var selectedIndex by remember { mutableStateOf(0) }
+
+    val items = listOf(
+        Icons.Default.Home to "Home",
+        Icons.Default.Search to "Search",
+        Icons.Default.Download to "Downloads",
+        Icons.Default.Person to "Profile"
+    )
+
     NavigationBar(
-        containerColor = Color(0xFF1E1E1E),
+        containerColor = Color(0xFF171725),
         contentColor = Color.White
     ) {
-        NavigationBarItem(selected = true, onClick = {}, icon = {
-            Icon(Icons.Default.Home, contentDescription = "Home")
-        }, label = { Text("Home") })
+        items.forEachIndexed { index, item ->
+            val selected = selectedIndex == index
 
-        NavigationBarItem(selected = false, onClick = {}, icon = {
-            Icon(Icons.Default.Search, contentDescription = "Search")
-        })
-
-        NavigationBarItem(selected = false, onClick = {}, icon = {
-            Icon(Icons.Default.Download, contentDescription = "Downloads")
-        })
-
-        NavigationBarItem(selected = false, onClick = {}, icon = {
-            Icon(Icons.Default.Person, contentDescription = "Profile")
-        })
+            NavigationBarItem(
+                selected = selected,
+                onClick = { selectedIndex = index },
+                icon = {
+                    Box(
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .size(36.dp)
+                            .background(
+                                if (selected) Color.White else Color.Transparent,
+                                shape = CircleShape
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = item.first,
+                            contentDescription = item.second,
+                            tint = if (selected) Color(0xFF171725) else Color.White
+                        )
+                    }
+                },
+                label = {
+                    Text(
+                        text = item.second,
+                        color = if (selected) Color.White else Color.LightGray,
+                        fontSize = 12.sp
+                    )
+                },
+                alwaysShowLabel = true,
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent
+                )
+            )
+        }
     }
 }
