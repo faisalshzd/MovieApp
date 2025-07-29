@@ -16,6 +16,8 @@ import com.example.movieapp.R
 import android.graphics.Color
 import android.widget.TextView
 import android.widget.Toast
+import com.example.movieapp.MainActivity
+import com.example.movieapp.ui.home.HomeScreenActivity
 import com.example.movieapp.Reset_Password.ResetPasswordActivity
 import com.example.movieapp.analytics.AnalyticsTracker
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -97,6 +99,11 @@ class LoginScreenFragment : Fragment() {
             AnalyticsTracker.trackEvent(firebaseAnalytics, "LoginButtonClicked", bundle)
 
             //  login logic
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            intent.putExtra("navigate_to_home", true)
+            startActivity(intent)
+            requireActivity().finish()
+            requireActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
     }

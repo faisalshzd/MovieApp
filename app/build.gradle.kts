@@ -69,6 +69,13 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
     implementation("com.google.firebase:firebase-crashlytics-ndk")
     implementation("com.google.firebase:firebase-analytics")
+    // Retrofit & Gson
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    // Coil for image loading
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    // Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
