@@ -14,6 +14,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -30,8 +31,8 @@ import com.google.accompanist.pager.*
 @Composable
 fun HomeScreenActivity(viewModel: MovieViewModel) {
     val pagerState = rememberPagerState()
-    val categories = listOf("All", "Comedy", "Animation", "Documentary")
-    var selectedCategory by remember { mutableStateOf("All") }
+    val categories by viewModel.genres.collectAsState()
+    val selectedCategory = viewModel.selectedCategory
     var searchQuery by remember { mutableStateOf("") }
     val montserratMedium = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium))
     val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))
@@ -48,7 +49,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = 16.dp)
+               // .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(Modifier.height(16.dp))
@@ -57,7 +58,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
@@ -71,8 +72,17 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     )
                     Spacer(Modifier.width(16.dp))
                     Column {
-                        Text("Hello, Smith", color = Color.White, fontSize = 16.sp, fontFamily = montserratSemiBold)
-                        Text("Let’s stream your favorite movie", color = Color(0xFF92929D), fontSize = 12.sp)
+                        Text(
+                            "Hello, Smith",
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontFamily = montserratSemiBold
+                        )
+                        Text(
+                            "Let’s stream your favorite movie",
+                            color = Color(0xFF92929D),
+                            fontSize = 12.sp
+                        )
                     }
                 }
                 Icon(
@@ -85,12 +95,25 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
 
             Spacer(Modifier.height(33.dp))
 
+            // Search Field
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
                 placeholder = { Text("Search a title..", color = Color(0xFF92929D)) },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color(0xFF92929D)) },
-                trailingIcon = { Icon(Icons.Default.FilterList, contentDescription = null, tint = Color(0xFF92929D)) },
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Search,
+                        contentDescription = null,
+                        tint = Color(0xFF92929D)
+                    )
+                },
+                trailingIcon = {
+                    Icon(
+                        Icons.Default.FilterList,
+                        contentDescription = null,
+                        tint = Color(0xFF92929D)
+                    )
+                },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFF252836),
                     unfocusedContainerColor = Color(0xFF252836),
@@ -101,12 +124,18 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                 textStyle = LocalTextStyle.current.copy(color = Color(0xFF92929D)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(56.dp)
+                    .padding(horizontal = 16.dp),
                 shape = CircleShape,
                 singleLine = true
             )
-            Spacer(Modifier.height(24.dp))
 
+            Spacer(Modifier.height(24.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            {
             // Pager
             HorizontalPager(
                 count = 3,
@@ -116,24 +145,51 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     .height(180.dp)
             ) { page ->
                 val movie = viewModel.popularUiMovies.getOrNull(page)
-                val imageUrl = movie?.posterUrl ?: "https://via.placeholder.com/500x750.png?text=No+Image"
-
-                AsyncImage(
-                    model = imageUrl,
-                    contentDescription = null,
+                val imageUrl =
+                    movie?.posterUrl ?: "https://via.placeholder.com/500x750.png?text=No+Image"
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(MaterialTheme.shapes.medium)
-                )
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(16.dp))
+                        .padding(horizontal = 8.dp)
+                ) {
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(0.dp))
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = "Black Panther: Wakanda Forever",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontFamily = montserratSemiBold
+                        )
+                        Text(
+                            text = "On March 2, 2022",
+                            color = Color.White,
+                            fontSize = 14.sp,
+                            fontFamily = montserratMedium
+                        )
+                    }
+                }
+            }
             }
 
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Pager Indicator
             CustomPagerIndicator(
                 pagerState = pagerState,
-                pageCount = 3, // or however many pages you have
+                pageCount = 3,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 activeColor = Color(0xFF12CDD9),
                 inactiveColor = Color(0xFF11535B)
@@ -142,91 +198,180 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Categories
-            Text("Categories", color = Color.White, fontSize = 16.sp, fontFamily = montserratSemiBold)
+            Text("Categories", color = Color.White, fontSize = 16.sp, fontFamily = montserratSemiBold, modifier = Modifier.padding(horizontal = 16.dp))
             Spacer(Modifier.height(15.dp))
-            val chipShape = RoundedCornerShape(25)
             LazyRow {
-                items(categories) { category ->
+
+                items(categories)
+                { category ->
                     val isSelected = category == selectedCategory
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .padding(end = 8.dp)
+                            .padding(horizontal = 16.dp)
                             .border(
-                                width = 1.dp,
+                                width = 5.dp,
                                 color = if (isSelected) Color(0xFF252836) else Color.Transparent,
-                                shape = chipShape
+                                shape = RoundedCornerShape(20)
                             )
                             .background(
                                 color = if (isSelected) Color(0xFF252836) else Color.Transparent,
-                                shape = chipShape
+                                shape = RoundedCornerShape(20)
                             )
-                            .clickable { selectedCategory = category }
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .clickable { viewModel.updateSelectedCategory(category) }
+                            .padding(horizontal = 7.dp, vertical = 8.dp)
                     ) {
                         Text(
                             text = category,
                             color = if (isSelected) Color(0xFF12CDD9) else Color.White,
                             fontSize = 12.sp,
-                            fontFamily=montserratMedium
+                            fontFamily = montserratMedium
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-            // Most Popular Header
+            // Most Popular
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(16.dp)
             ) {
                 Text("Most popular", color = Color.White, fontSize = 16.sp, fontFamily = montserratSemiBold)
                 Text("See All", color = Color(0xFF12CDD9), fontSize = 14.sp, fontFamily = montserratMedium)
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
 
-            // Movie Cards
-            LazyRow {
-                items(viewModel.popularUiMovies) { movie ->
-                    MovieCard(movie = movie)
+            // Selected movie Cards
+            when {
+                viewModel.isLoading -> {
+                    // Shimmer
+                    Spacer(modifier = Modifier.height(160.dp))
+                }
+
+                viewModel.filteredMovies.isEmpty() -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(160.dp)
+                            .padding(vertical = 16.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = null,
+                            tint = Color(0xFF12CDD9),
+                            modifier = Modifier.size(48.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "No movies found in this category.",
+                            color = Color.LightGray,
+                            fontSize = 14.sp
+                        )
+                    }
+                }
+
+                else -> {
+                    LazyRow {
+                        items(viewModel.filteredMovies) { movie ->
+                            MovieCard(movie = movie)
+                        }
+                    }
                 }
             }
+
+        }
         }
     }
-}
 
 @Composable
 fun MovieCard(movie: UiMovie) {
+    val montserratMedium = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium))
+    val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))
     Column(
         modifier = Modifier
-            .width(140.dp)
-            .padding(end = 16.dp)
+            .width(160.dp)
+            .padding(end = 5.dp)
+            .padding(start=16.dp)
     ) {
-        AsyncImage(
-            model = movie.posterUrl,
-            contentDescription = null,
+        Box(
             modifier = Modifier
                 .height(200.dp)
                 .fillMaxWidth()
-                .clip(MaterialTheme.shapes.medium)
-        )
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = movie.title,
-            color = Color.White,
-            fontSize = 14.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Star, contentDescription = null, tint = Color.Yellow, modifier = Modifier.size(16.dp))
-            Text(text = "${movie.rating}", color = Color.White, fontSize = 12.sp)
+                .clip(RoundedCornerShape(8.dp))
+        ) {
+            // Movie Poster
+            AsyncImage(
+                model = movie.posterUrl,
+                contentDescription = "movie image",
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            // Rating badge (top-right)
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+                    .background(
+                        color = Color(0x52252836),
+                        shape = RoundedCornerShape(4.dp)
+                    )
+                    .padding(horizontal = 6.dp, vertical = 2.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        tint = Color(0xFFFF8700),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = String.format("%.1f", movie.rating),
+                        color = Color(0xFFFF8700),
+                        fontSize = 12.sp,
+                        fontFamily = montserratSemiBold
+                    )
+                }
+            }
         }
-        Text(text = movie.genres, color = Color.LightGray, fontSize = 10.sp, maxLines = 2, overflow = TextOverflow.Ellipsis)
+        // Bottom container for title and genre
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .background(
+                    color = Color(0xFF252836),
+                    shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
+                )
+                .padding(horizontal = 8.dp, vertical = 8.dp)
+        ) {
+            Text(
+                text = movie.title,
+                color = Color.White,
+                fontSize = 14.sp,
+                fontFamily = montserratSemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = movie.genres.joinToString(", "),
+                color = Color(0xFF8E8E96),
+                fontSize = 12.sp,
+                fontFamily = montserratMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }
+
+
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -282,22 +427,22 @@ fun BottomNavBar() {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .background(Color.White, RoundedCornerShape(20.dp))
+                                .background(Color(0xFF252836), RoundedCornerShape(20.dp))
                                 .padding(horizontal = 12.dp, vertical = 6.dp)
                         ) {
                             Icon(
                                 imageVector = item.first,
                                 contentDescription = item.second,
-                                tint = Color(0xFF171725),
+                                tint = Color(0xFF12CDD9),
                                 modifier = Modifier.size(20.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = item.second,
-                                color = Color(0xFF171725),
+                                color = Color(0xFF12CDD9),
                                 fontSize = 12.sp,
-                                maxLines = 1,                  // Limits to one line
-                                overflow = TextOverflow.Ellipsis // Adds "..." if it overflows
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
 
                         }
@@ -305,7 +450,7 @@ fun BottomNavBar() {
                         Icon(
                             imageVector = item.first,
                             contentDescription = item.second,
-                            tint = Color.White,
+                            tint = Color(0xFF92929D),
                             modifier = Modifier.size(24.dp)
                         )
                     }

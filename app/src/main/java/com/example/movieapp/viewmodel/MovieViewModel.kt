@@ -16,22 +16,45 @@ class MovieViewModel(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
 
+    var isLoading by mutableStateOf(true)
+        private set
+
     var popularUiMovies by mutableStateOf<List<UiMovie>>(emptyList())
         private set
 
-    private val _genreMap = MutableStateFlow<Map<Int, String>>(emptyMap())
+    private val _genres = MutableStateFlow<List<String>>(listOf("All"))
+    val genres: StateFlow<List<String>> get() = _genres
+
+
+    var selectedCategory by mutableStateOf("All")
+        private set
+
+    val filteredMovies: List<UiMovie>
+        get() = if (selectedCategory == "All") {
+            popularUiMovies
+        } else {
+            popularUiMovies.filter { movie ->
+                selectedCategory in movie.genres
+            }
+        }
 
     fun fetchMoviesAndGenres(apiKey: String = "13fe289de01d157201e39ab655a5ed97") {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val genres = getGenresUseCase.execute(apiKey)
-                _genreMap.value = genres
-
-
-                popularUiMovies = getPopularMoviesUseCase.execute(genres)
+                isLoading = true
+                val genresMap = getGenresUseCase.execute(apiKey)
+                _genres.value = listOf("All") + genresMap.values.sorted()
+                popularUiMovies = getPopularMoviesUseCase.execute(genresMap)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            finally {
+                isLoading = false
+            }
         }
+    }
+
+    fun updateSelectedCategory(category: String) {
+        selectedCategory = category
     }
 }
