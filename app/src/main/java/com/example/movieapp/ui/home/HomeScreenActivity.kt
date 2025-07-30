@@ -26,6 +26,11 @@ import com.example.movieapp.R
 import com.example.movieapp.data.model.UiMovie
 import com.example.movieapp.viewmodel.MovieViewModel
 import com.google.accompanist.pager.*
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
+
+
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -242,12 +247,12 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                 Text("See All", color = Color(0xFF12CDD9), fontSize = 14.sp, fontFamily = montserratMedium)
             }
 
-
             // Selected movie Cards
             when {
                 viewModel.isLoading -> {
-                    // Shimmer
-                    Spacer(modifier = Modifier.height(160.dp))
+                    LazyRow {
+                        items(5) { MovieCardShimmer() }
+                    }
                 }
 
                 viewModel.filteredMovies.isEmpty() -> {
@@ -282,6 +287,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     }
                 }
             }
+
 
         }
         }
@@ -464,4 +470,26 @@ fun BottomNavBar() {
     }
 }
 
+@Composable
+fun MovieCardShimmer() {
+    Column(
+        modifier = Modifier
+            .width(160.dp)
+            .padding(end = 5.dp, start = 16.dp)
+    ) {
+        // Shimmer Poster
+        Box(
+            modifier = Modifier
+                .height(200.dp)
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .placeholder(
+                    visible = true,
+                    highlight = PlaceholderHighlight.shimmer(),
+                            color = Color(0xFF3A3A4B),
+                    shape = RoundedCornerShape(8.dp)
+                )
+        )
 
+    }
+}

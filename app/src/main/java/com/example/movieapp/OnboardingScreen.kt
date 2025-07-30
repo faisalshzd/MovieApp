@@ -215,6 +215,9 @@ fun OnboardingScreen(navController: NavController) {
                                     navController.navigate("main") {
                                         popUpTo("onboarding") { inclusive = true }
                                     }
+//                                    navController.navigate("login_or_signup") {
+//                                        popUpTo("onboarding") { inclusive = true }
+//                                    }
                                 }
                             }
                         },

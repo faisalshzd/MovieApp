@@ -13,7 +13,7 @@ class GetPopularMoviesUseCase(
                 title = movie.title,
                 posterUrl = "https://image.tmdb.org/t/p/w500${movie.poster_path}",
                 rating = movie.vote_average,
-                genres = movie.genre_ids.mapNotNull { genreMap[it] }  // now returns List<String>
+                genres = movie.genre_ids.mapNotNull { genreMap[it] }
             )
         }
     }
