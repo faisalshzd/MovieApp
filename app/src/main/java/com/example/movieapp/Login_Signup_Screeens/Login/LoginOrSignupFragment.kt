@@ -72,7 +72,7 @@ class LoginOrSignupFragment : Fragment() {
 }
 
 @Composable
-fun Login_or_Sign(navController: NavController) {
+fun Login_or_Sign() {
     AndroidView(
         factory = { context ->
             FragmentContainerView(context).apply {

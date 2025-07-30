@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                             OnboardingScreen(navController)
                         }
                         composable("login_or_signup") {
-                            Login_or_Sign(navController)
+                            Login_or_Sign()
                         }
                         composable("reset_password") {
                             ResetPasswordScreen(onBackClick = { navController.popBackStack() })

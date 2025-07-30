@@ -63,38 +63,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp" />
 
-<!--    &lt;!&ndash; Email Field &ndash;&gt;-->
-<!--    <EditText-->
-<!--        android:id="@+id/emailEditText"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:hint="Email Address"-->
-<!--        android:inputType="textEmailAddress"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textColorHint="#92929D"-->
-<!--        android:background="@drawable/rounded_edittext_bg"-->
-<!--        android:paddingStart="16dp"-->
-<!--        android:paddingEnd="16dp"-->
-<!--        android:layout_below="@id/welcomeMessage"/>-->
-
-<!--    &lt;!&ndash; Password Field with Eye Icon &ndash;&gt;-->
-<!--    <EditText-->
-<!--        android:id="@+id/passwordEditText"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="56dp"-->
-<!--        android:layout_below="@id/emailEditText"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:hint="Password"-->
-<!--        android:inputType="textPassword"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:textColorHint="#92929D"-->
-<!--        android:background="@drawable/rounded_edittext_bg"-->
-<!--        android:paddingStart="16dp"-->
-<!--        android:paddingEnd="48dp"-->
-<!--    android:drawableEnd="@drawable/password_eye_off"-->
-<!--    android:drawableRight="@drawable/password_eye_off"-->
-<!--        />-->
-
     <!-- Email Label -->
     <TextView
         android:id="@+id/emailLabel"

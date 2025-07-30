@@ -124,7 +124,6 @@ fun CreateNewPasswordScreen(
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Text for "New Password" label
             Text(
                 text = "New Password",
                 color = Color(0xFFEBEBEF),
@@ -145,7 +144,6 @@ fun CreateNewPasswordScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Text for "Confirm Password" label
             Text(
                 text = "Confirm Password",
                 color = Color(0xFFEBEBEF),
@@ -169,7 +167,6 @@ fun CreateNewPasswordScreen(
             Button(
                 onClick = {
                     // TODO: Implement password update logic
-                    // overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

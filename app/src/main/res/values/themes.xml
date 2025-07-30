@@ -11,7 +11,7 @@
         <item name="colorSecondary">@color/teal_700</item>
         <item name="colorOnPrimary">@android:color/white</item>
 
-        <!-- This prevents Material buttons from overriding your drawable -->
+        <!-- This prevents Material buttons from overriding drawable -->
         <item name="materialButtonStyle">@style/CustomMaterialButton</item>
     </style>
 

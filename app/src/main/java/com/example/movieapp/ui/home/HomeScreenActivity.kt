@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -28,9 +29,8 @@ import com.google.accompanist.pager.*
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HomeScreenActivity(viewModel: MovieViewModel) {
-    val genreMap by viewModel.genreMap.collectAsState()
     val pagerState = rememberPagerState()
-    val categories = listOf("All", "Comedy", "Animation", "Dokumenter")
+    val categories = listOf("All", "Comedy", "Animation", "Documentary")
     var selectedCategory by remember { mutableStateOf("All") }
     var searchQuery by remember { mutableStateOf("") }
     val montserratMedium = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium))
@@ -71,41 +71,41 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     )
                     Spacer(Modifier.width(16.dp))
                     Column {
-                        Text("Hello, Smith", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                        Text("Let’s stream your favorite movie", color = Color.Gray, fontSize = 12.sp)
+                        Text("Hello, Smith", color = Color.White, fontSize = 16.sp, fontFamily = montserratSemiBold)
+                        Text("Let’s stream your favorite movie", color = Color(0xFF92929D), fontSize = 12.sp)
                     }
                 }
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = null,
                     tint = Color.Red,
-                    modifier = Modifier.size(28.dp)
+                    modifier = Modifier.size(24.dp)
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(33.dp))
 
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Search a title..", color = Color.Gray) },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color.White) },
-                trailingIcon = { Icon(Icons.Default.FilterList, contentDescription = null, tint = Color.White) },
+                placeholder = { Text("Search a title..", color = Color(0xFF92929D)) },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color(0xFF92929D)) },
+                trailingIcon = { Icon(Icons.Default.FilterList, contentDescription = null, tint = Color(0xFF92929D)) },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color(0xFF1E1E1E),
-                    unfocusedContainerColor = Color(0xFF1E1E1E),
+                    focusedContainerColor = Color(0xFF252836),
+                    unfocusedContainerColor = Color(0xFF252836),
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent
                 ),
-                textStyle = LocalTextStyle.current.copy(color = Color.White),
+                textStyle = LocalTextStyle.current.copy(color = Color(0xFF92929D)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = CircleShape,
                 singleLine = true
             )
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(24.dp))
 
             // Pager
             HorizontalPager(
@@ -122,7 +122,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     model = imageUrl,
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .clip(MaterialTheme.shapes.medium)
                 )
             }
@@ -131,53 +131,61 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
 
             // Pager Indicator
-            HorizontalPagerIndicator(
+            CustomPagerIndicator(
                 pagerState = pagerState,
-                activeColor = Color(0xFF00FFFF),
-                inactiveColor = Color.Gray,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                pageCount = 3, // or however many pages you have
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                activeColor = Color(0xFF12CDD9),
+                inactiveColor = Color(0xFF11535B)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Categories
-            Text("Categories", color = Color.White, fontSize = 18.sp)
-            Spacer(Modifier.height(8.dp))
+            Text("Categories", color = Color.White, fontSize = 16.sp, fontFamily = montserratSemiBold)
+            Spacer(Modifier.height(15.dp))
+            val chipShape = RoundedCornerShape(25)
             LazyRow {
                 items(categories) { category ->
+                    val isSelected = category == selectedCategory
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .padding(end = 8.dp)
                             .border(
                                 width = 1.dp,
-                                color = if (category == selectedCategory) Color(0xFF00FFFF) else Color.Transparent,
-                                shape = CircleShape
+                                color = if (isSelected) Color(0xFF252836) else Color.Transparent,
+                                shape = chipShape
                             )
                             .background(
-                                if (category == selectedCategory) Color(0xFF1E1E1E) else Color.Transparent,
-                                shape = CircleShape
+                                color = if (isSelected) Color(0xFF252836) else Color.Transparent,
+                                shape = chipShape
                             )
                             .clickable { selectedCategory = category }
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Text(text = category, color = Color.White)
+                        Text(
+                            text = category,
+                            color = if (isSelected) Color(0xFF12CDD9) else Color.White,
+                            fontSize = 12.sp,
+                            fontFamily=montserratMedium
+                        )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
             // Most Popular Header
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Most popular", color = Color.White, fontSize = 18.sp)
-                Text("See All", color = Color(0xFF00FFFF), fontSize = 14.sp)
+                Text("Most popular", color = Color.White, fontSize = 16.sp, fontFamily = montserratSemiBold)
+                Text("See All", color = Color(0xFF12CDD9), fontSize = 14.sp, fontFamily = montserratMedium)
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Movie Cards
             LazyRow {
@@ -220,6 +228,32 @@ fun MovieCard(movie: UiMovie) {
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun CustomPagerIndicator(
+    pagerState: PagerState,
+    pageCount: Int,
+    modifier: Modifier = Modifier,
+    activeColor: Color = Color(0xFF12CDD9),
+    inactiveColor: Color = Color(0xFF11535B)
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
+    ) {
+        repeat(pageCount) { index ->
+            val isSelected = pagerState.currentPage == index
+            Box(
+                modifier = Modifier
+                    .height(6.dp)
+                    .width(if (isSelected) 18.dp else 6.dp)
+                    .clip(RoundedCornerShape(3.dp))
+                    .background(if (isSelected) activeColor else inactiveColor)
+            )
+        }
+    }
+}
+
 
 @Composable
 fun BottomNavBar() {
@@ -243,31 +277,40 @@ fun BottomNavBar() {
                 selected = selected,
                 onClick = { selectedIndex = index },
                 icon = {
-                    Box(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .size(36.dp)
-                            .background(
-                                if (selected) Color.White else Color.Transparent,
-                                shape = CircleShape
-                            ),
-                        contentAlignment = Alignment.Center
-                    ) {
+                    if (selected) {
+                        // Icon and Text side by side in a rounded background
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .background(Color.White, RoundedCornerShape(20.dp))
+                                .padding(horizontal = 12.dp, vertical = 6.dp)
+                        ) {
+                            Icon(
+                                imageVector = item.first,
+                                contentDescription = item.second,
+                                tint = Color(0xFF171725),
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = item.second,
+                                color = Color(0xFF171725),
+                                fontSize = 12.sp,
+                                maxLines = 1,                  // Limits to one line
+                                overflow = TextOverflow.Ellipsis // Adds "..." if it overflows
+                            )
+
+                        }
+                    } else {
                         Icon(
                             imageVector = item.first,
                             contentDescription = item.second,
-                            tint = if (selected) Color(0xFF171725) else Color.White
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 },
-                label = {
-                    Text(
-                        text = item.second,
-                        color = if (selected) Color.White else Color.LightGray,
-                        fontSize = 12.sp
-                    )
-                },
-                alwaysShowLabel = true,
+                alwaysShowLabel = false,
                 colors = NavigationBarItemDefaults.colors(
                     indicatorColor = Color.Transparent
                 )
@@ -275,3 +318,5 @@ fun BottomNavBar() {
         }
     }
 }
+
+

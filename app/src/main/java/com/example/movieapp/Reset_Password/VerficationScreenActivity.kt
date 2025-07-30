@@ -104,8 +104,6 @@ fun VerificationScreen(
     val focusRequesters = remember { List(otpLength) { FocusRequester() } }
     val focusedIndex = remember { mutableStateOf(-1) }
 
-    val context = LocalContext.current
-
     val montserratMedium = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium))
     val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))
 

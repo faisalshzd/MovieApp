@@ -9,7 +9,6 @@ import com.example.movieapp.model.PageData
 import com.example.movieapp.R
 import com.example.movieapp.data.network.MovieApiService
 import com.example.movieapp.data.repository.MovieRepository
-import com.example.movieapp.viewmodel.MovieViewModel
 import okhttp3.OkHttpClient
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
