@@ -212,12 +212,12 @@ fun OnboardingScreen(navController: NavController) {
                                 if (nextPage != null) {
                                     pagerState.animateScrollToPage(nextPage)
                                 } else {
-                                    navController.navigate("main") {
-                                        popUpTo("onboarding") { inclusive = true }
-                                    }
-//                                    navController.navigate("login_or_signup") {
+//                                    navController.navigate("main") {
 //                                        popUpTo("onboarding") { inclusive = true }
 //                                    }
+                                    navController.navigate("login_or_signup") {
+                                        popUpTo("onboarding") { inclusive = true }
+                                    }
                                 }
                             }
                         },
