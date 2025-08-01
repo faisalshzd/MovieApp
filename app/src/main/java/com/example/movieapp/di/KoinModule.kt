@@ -10,15 +10,22 @@ import com.example.movieapp.R
 import com.example.movieapp.data.network.MovieApiService
 import com.example.movieapp.data.repository.MovieRepository
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import org.koin.dsl.single
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val koinModule = module {
-
-    single {
-        OkHttpClient.Builder().build()
+    single{
+        val alogger = HttpLoggingInterceptor().apply {
+            //level = (HttpLoggingInterceptor.Level.BASIC)
+            //level = (HttpLoggingInterceptor.Level.HEADERS)
+            level = (HttpLoggingInterceptor.Level.BODY)
+        }
+        OkHttpClient.Builder().addInterceptor(alogger).build()
     }
 
     single<Retrofit> {
@@ -39,9 +46,10 @@ val koinModule = module {
     // UseCases
     single { com.example.movieapp.usecase.GetGenresUseCase(get()) }
     single { com.example.movieapp.usecase.GetPopularMoviesUseCase(get()) }
+    single { com.example.movieapp.usecase.GetMoviesByGenreUseCase(get()) }
 
     // ViewModel
-    viewModel { com.example.movieapp.viewmodel.MovieViewModel(get(), get()) }
+    viewModel { com.example.movieapp.viewmodel.MovieViewModel(get(), get(), getMoviesByGenreUseCase = get()) }
 
     // Fonts and PageData list
     val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))

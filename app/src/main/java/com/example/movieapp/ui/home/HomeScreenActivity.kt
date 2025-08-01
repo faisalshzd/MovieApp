@@ -255,7 +255,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     }
                 }
 
-                viewModel.filteredMovies.isEmpty() -> {
+                viewModel.popularUiMovies.isEmpty() -> {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -281,7 +281,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
 
                 else -> {
                     LazyRow {
-                        items(viewModel.filteredMovies) { movie ->
+                        items(viewModel.popularUiMovies) { movie ->
                             MovieCard(movie = movie)
                         }
                     }

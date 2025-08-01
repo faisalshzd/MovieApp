@@ -12,4 +12,11 @@ class MovieRepositoryImpl(private val apiService: MovieApiService) : MovieReposi
     override suspend fun getMovieGenres(apiKey: String): GenreResponse {
         return apiService.getMovieGenres(apiKey)
     }
+    override suspend fun getMoviesByGenre(genreId: Int?): MovieResponse {
+        return if (genreId == null) {
+            apiService.getPopularMovies()
+        } else {
+            apiService.getMoviesByGenre(genreId)
+        }
+    }
 }

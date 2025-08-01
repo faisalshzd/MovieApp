@@ -4,5 +4,6 @@ data class UiMovie(
     val title: String,
     val posterUrl: String,
     val rating: Double,
-    val genres: List<String>
+    val genres: List<String>,
+    val genreIds: List<Int>
 )
