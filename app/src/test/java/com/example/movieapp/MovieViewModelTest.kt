@@ -53,20 +53,14 @@ class MovieViewModelTest {
     }
 
     @Test
-    fun `fetchMoviesAndGenres - should fetch genres and popular movies`() = runTest {
-        // Given
+    fun fetchMoviesAndGenres() = runTest {
         val viewModel = createViewModel()
-        val dummyGenresMap = mapOf(1 to "Action", 2 to "Comedy")
-        val dummyPopularMovies = listOf(
-            UiMovie("Movie 1", "/poster1.jpg", 7.5, listOf("Action"), listOf(1)),
-            UiMovie("Movie 2", "/poster2.jpg", 6.8, listOf("Comedy"), listOf(2))
-        )
 
         whenever(getGenresUseCase.execute(any())).thenReturn(dummyGenresMap)
         whenever(getPopularMoviesUseCase.execute(dummyGenresMap)).thenReturn(dummyPopularMovies)
 
         viewModel.fetchMoviesAndGenres()
-        advanceUntilIdle()
+        advanceUntilIdle() // lets all your coroutines finish executing before moving on in your test.
 
         viewModel.genres.test {
             assertEquals(listOf("All", "Action", "Comedy"), awaitItem())
@@ -79,8 +73,9 @@ class MovieViewModelTest {
         }
     }
 
+
     @Test
-    fun `updateSelectedCategory should update selectedCategory value`() = runTest {
+    fun updateSelectedCategory() = runTest {
         val viewModel = createViewModel()
         assertEquals("All", viewModel.selectedCategory)
 
@@ -120,7 +115,7 @@ class MovieViewModelTest {
     }
 
     @Test
-    fun `fetchMovies - handles exception safely`() = runTest {
+    fun `fetchMovies handles exception safely`() = runTest {
         val viewModel = createViewModel()
         whenever(getGenresUseCase.execute(any())).thenThrow(RuntimeException("API error"))
 
@@ -134,7 +129,7 @@ class MovieViewModelTest {
     }
 
     @Test
-    fun `fetchMovies - invalid category should not crash`() = runTest {
+    fun `fetchMovies invalid category should not crash`() = runTest {
         val viewModel = createViewModel()
         whenever(getGenresUseCase.execute(any())).thenReturn(dummyGenresMap)
         whenever(getMoviesByGenreUseCase.execute(null)).thenReturn(emptyList())
