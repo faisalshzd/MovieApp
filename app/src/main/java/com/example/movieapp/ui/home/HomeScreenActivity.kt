@@ -41,6 +41,9 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
     var searchQuery by remember { mutableStateOf("") }
     val montserratMedium = FontFamily(Font(R.font.montserrat_medium, FontWeight.Medium))
     val montserratSemiBold = FontFamily(Font(R.font.montserrat_semibold, FontWeight.SemiBold))
+    val isLoading by viewModel.isLoading.collectAsState()
+    val popularMovies by viewModel.popularUiMovies.collectAsState()
+
 
     LaunchedEffect(Unit) {
         viewModel.fetchMoviesAndGenres()
@@ -149,7 +152,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
                     .fillMaxWidth()
                     .height(180.dp)
             ) { page ->
-                val movie = viewModel.popularUiMovies.getOrNull(page)
+                val movie = popularMovies.getOrNull(page)
                 val imageUrl =
                     movie?.posterUrl ?: "https://via.placeholder.com/500x750.png?text=No+Image"
                 Box(
@@ -249,13 +252,13 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
 
             // Selected movie Cards
             when {
-                viewModel.isLoading -> {
+                isLoading -> {
                     LazyRow {
                         items(5) { MovieCardShimmer() }
                     }
                 }
 
-                viewModel.popularUiMovies.isEmpty() -> {
+                popularMovies.isEmpty() -> {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -281,7 +284,7 @@ fun HomeScreenActivity(viewModel: MovieViewModel) {
 
                 else -> {
                     LazyRow {
-                        items(viewModel.popularUiMovies) { movie ->
+                        items(popularMovies) { movie ->
                             MovieCard(movie = movie)
                         }
                     }

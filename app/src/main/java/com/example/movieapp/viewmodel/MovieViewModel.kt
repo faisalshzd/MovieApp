@@ -19,11 +19,12 @@ class MovieViewModel(
     private val getMoviesByGenreUseCase: GetMoviesByGenreUseCase
 ) : ViewModel() {
 
-    var isLoading by mutableStateOf(true)
-        private set
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
-    var popularUiMovies by mutableStateOf<List<UiMovie>>(emptyList())
-        private set
+    private val _popularUiMovies = MutableStateFlow<List<UiMovie>>(emptyList())
+    val popularUiMovies: StateFlow<List<UiMovie>> = _popularUiMovies
+
 
     private val _genres = MutableStateFlow<List<String>>(listOf("All"))
     val genres: StateFlow<List<String>> get() = _genres
@@ -35,22 +36,16 @@ class MovieViewModel(
 
     fun fetchMovies(category: String = "All", apiKey: String = "13fe289de01d157201e39ab655a5ed97") {
         viewModelScope.launch(Dispatchers.IO) {
-            isLoading = true
+            _isLoading.value = true
             try {
-                Log.d("API_CALL", "Fetching movies for category: $category")
-
-                // Only call API if cache is empty
                 if (genreMapCache.isEmpty()) {
                     val genresMap = getGenresUseCase.execute(apiKey)
                     genreMapCache = genresMap
                     _genres.value = listOf("All") + genresMap.values.sorted()
                 }
 
-                // Use cached map
                 val genresMap = genreMapCache
-
-                // Fetch movies based on category
-                popularUiMovies = if (category == "All") {
+                _popularUiMovies.value = if (category == "All") {
                     getPopularMoviesUseCase.execute(genresMap)
                 } else {
                     val genreId = genresMap.filterValues { it == category }.keys.firstOrNull()
@@ -62,11 +57,10 @@ class MovieViewModel(
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                isLoading = false
+                _isLoading.value = false
             }
         }
     }
-
 
     fun fetchMoviesAndGenres(apiKey: String = "13fe289de01d157201e39ab655a5ed97") {
         fetchMovies(category = "All", apiKey = apiKey)
